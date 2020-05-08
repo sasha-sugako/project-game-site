@@ -4,7 +4,12 @@
 <h5>Нужно  нажать на кнопку</h5>
 <div class="login">
 <form action="" method="post" novalidate>
-    <a href="http://127.0.0.1:8080/success" class="button1">OK</a>
+    {% for j in vopr %}
+    <h6>{{ j }}</h6>
+        {% for i in list %}
+            <a href="http://127.0.0.1:8080/success" class="button1">{{ i }}</a>
+        {% endfor %}
+    {% endfor %}
 </form>
 </div>
 {% endblock %}
