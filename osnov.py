@@ -1,6 +1,5 @@
 from flask import Flask
 from flask import render_template, redirect
-import sqlite3
 import random
 from data import db_session
 from requests import request
@@ -40,5 +39,5 @@ def obr_vop(num_vopr):
 
 
 if __name__ == '__main__':
-    db_session.global_init("db/blogs.sqlite")
+    db_session.global_init("db/game.sqlite")
     app.run(port=8080, host='127.0.0.1')
