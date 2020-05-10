@@ -110,8 +110,7 @@ session = db_session.create_session()
 session.add(second)
 session.commit()
 second = Second_page()
-second.title = '''Кому Гамлет говорит следующую фразу: 
-                  «Нет в Датском королевстве подлеца, который не был бы отпетым плутом»?'''
+second.title = '''Кому Гамлет говорит следующую фразу: «Нет в Датском королевстве подлеца, который не был бы отпетым плутом»?'''
 second.otve = 'горацио'
 second.kol_isp = 0
 second.vopr_id = 2
@@ -127,8 +126,7 @@ session = db_session.create_session()
 session.add(second)
 session.commit()
 second = Second_page()
-second.title = '''Этих млекопитающих (не собак) приручили индийские магараджи, персидские шахи, 
-                  турецкие султаны, арабские шейхи, эфиопские императоры к охоте на других животных.'''
+second.title = '''Этих млекопитающих (не собак) приручили индийские магараджи, персидские шахи, турецкие султаны, арабские шейхи, эфиопские императоры к охоте на других животных.'''
 second.otve = 'гепард'
 second.kol_isp = 0
 second.vopr_id = 3
@@ -177,9 +175,8 @@ session = db_session.create_session()
 session.add(second)
 session.commit()
 second = Second_page()
-second.title = '''Название какого блюда из творога, в который вводят взбитые в густую пену яичные белки, 
-                  во французском языке имеет еще и значение «пощечина»?'''
-second.otve = 'суфле'
+second.title = '''ечина»?'''
+second.otve = 'суфле'Название какого блюда из творога, в который вводят взбитые в густую пену яичные белки, во французском языке имеет еще и значение «пощ
 second.kol_isp = 0
 second.vopr_id = 4
 session = db_session.create_session()
