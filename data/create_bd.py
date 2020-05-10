@@ -1,9 +1,9 @@
-import sqlalchemy
+from flask import Flask
 from data import db_session
-from data import first_page
-from data import second_page
+from data import __all_models
 
-
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 first = First_page()
 first.kol_vo = 5
 first.tema_vopr = 'Фильмы'
@@ -248,3 +248,12 @@ second.vopr_id = 5
 session = db_session.create_session()
 session.add(second)
 session.commit()
+
+
+def main():
+    db_session.global_init("db/game.sqlite")
+    app.run()
+
+
+if __name__ == '__main__':
+    main()
