@@ -48,6 +48,7 @@ def hodgepodge():
 
 def obr_vop(num_vopr):
     result = []
+    session = db_session.create_session()
     for i in session.query(Second_page).filter(Second_page.kol_isp == 0, Second_page.vopr_id == num_vopr):
         result.append(i)
     a = random.randint(0, len(result))
@@ -58,13 +59,15 @@ def obr_vop(num_vopr):
 
 
 def name_vopr():
-    result = session.query(First_page).all()
+    session = db_session.create_session()
+    result = []
+    for i in session.query(First_page).all():
+        result.append(i.tema_vopr)
     return result
     
 #params = {'form': {
 #        'vopr': obr_vop(num_vopr)
 #    }}
-
 if __name__ == '__main__':
     db_session.global_init("db/game.sqlite")
     app.run(port=8080, host='127.0.0.1')
