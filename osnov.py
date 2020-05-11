@@ -1,49 +1,86 @@
 from flask import Flask
 from flask import render_template, redirect
 import random
+from flask_wtf import FlaskForm
+from wtforms import TextAreaField, SubmitField
 from data import db_session
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+k = 0
 
 
 @app.route('/game', methods=['GET', 'POST'])
 def login():
     params = {'form': {
         'vopr': ['Фильмы', 'Книги', 'Фауна', 'Еда', 'Солянка'],
-        'list': [10, 20, 30, 40, 50],
         'id_vopr': [1, 2, 3, 4, 5]
     }}
     return render_template('secur.html', **params)
 
     
-@app.route('/films')
+@app.route('/films', methods=['GET', 'POST'])
 def films():
-    params = {}
-    return render_template('films.html', **params)
+    global k
+    form = AnswerForm()
+    if form.validate_on_submit():
+        session = db_session.create_session()
+        if session.query(Second_page).filter(Second_page.otve == form.answer.data).first():
+            k += 10
+        session.commit()
+        return redirect('/game')
+    return render_template('films.html', form=form)
 
 
-@app.route('/books')
+@app.route('/books', methods=['GET', 'POST'])
 def books():
-    params = {}
-    return render_template('books.html', **params)
+    global k
+    form = AnswerForm()
+    if form.validate_on_submit():
+        session = db_session.create_session()
+        if session.query(Second_page).filter(Second_page.otve == form.answer.data).first():
+            k += 10
+        session.commit()
+        return redirect('/game')
+    return render_template('books.html', form=form)
 
 
-@app.route('/animals')
+@app.route('/animals', methods=['GET', 'POST'])
 def animals():
-    params = {}
-    return render_template('animals.html', **params)
+    global k
+    form = AnswerForm()
+    if form.validate_on_submit():
+        session = db_session.create_session()
+        if session.query(Second_page).filter(Second_page.otve == form.answer.data).first():
+            k += 10
+        session.commit()
+        return redirect('/game')
+    return render_template('animals.html', form=form)
 
 
-@app.route('/units')
+@app.route('/units', methods=['GET', 'POST'])
 def units():
-    params = {}
-    return render_template('units.html', **params)
+    global k
+    form = AnswerForm()
+    if form.validate_on_submit():
+        session = db_session.create_session()
+        if session.query(Second_page).filter(Second_page.otve == form.answer.data).first():
+            k += 10
+        session.commit()
+        return redirect('/game')
+    return render_template('units.html', form=form)
 
 
-@app.route('/hodgepodge')
+@app.route('/hodgepodge', methods=['GET', 'POST'])
 def hodgepodge():
-    params = {}
-    return render_template('hodgepodge.html', **params)
+    global k
+    form = AnswerForm()
+    if form.validate_on_submit():
+        session = db_session.create_session()
+        if session.query(Second_page).filter(Second_page.otve == form.answer.data).first():
+            k += 10
+        session.commit()
+        return redirect('/game')
+    return render_template('hodgepodge.html', form=form)
 
 
 def obr_vop(num_vopr):
@@ -64,7 +101,13 @@ def name_vopr():
     for i in session.query(First_page).all():
         result.append(i.tema_vopr)
     return result
-    
+
+
+class AnswerForm(FlaskForm):
+    answer = TextAreaField("Ответ: ")
+    submit = SubmitField('Отправить')
+
+
 #params = {'form': {
 #        'vopr': obr_vop(num_vopr)
 #    }}
