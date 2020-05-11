@@ -4,11 +4,25 @@
 <h5>Нужно  нажать на кнопку</h5>
 <div class="login">
 <form action="" method="post" novalidate>
-    {% for j in vopr %}
-    <h6>{{ j }}</h6>
-        {% for i in list %}
-            <a href="http://127.0.0.1:8080/success" class="button1" >{{ i }}</a>
-        {% endfor %}
+    <h6>{{ form['vopr'][0] }}</h6>
+    {% for i in form['id_vopr']%}
+        <a href="http://127.0.0.1:8080/films">{{ i }}</a>
+    {% endfor %}
+    <h6>{{ form['vopr'][1] }}</h6>
+    {% for i in form['id_vopr']%}
+        <a href="http://127.0.0.1:8080/books">{{ i }}</a>
+    {% endfor %}
+    <h6>{{ form['vopr'][2] }}</h6>
+    {% for i in form['id_vopr']%}
+        <a href="http://127.0.0.1:8080/animals">{{ i }}</a>
+    {% endfor %}
+    <h6>{{ form['vopr'][3] }}</h6>
+    {% for i in form['id_vopr']%}
+        <a href="http://127.0.0.1:8080/units">{{ i }}</a>
+    {% endfor %}
+    <h6>{{ form['vopr'][4] }}</h6>
+    {% for i in form['id_vopr']%}
+        <a href="http://127.0.0.1:8080/hodgepodge">{{ i }}</a>
     {% endfor %}
 </form>
 </div>

@@ -2,29 +2,48 @@ from flask import Flask
 from flask import render_template, redirect
 import random
 from data import db_session
-from requests import request
-con = sqlite3.connect("game.db")
-cur = con.cursor()
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
 
 @app.route('/game', methods=['GET', 'POST'])
 def login():
-    params = {
+    params = {'form': {
         'vopr': ['Фильмы', 'Книги', 'Фауна', 'Еда', 'Солянка'],
         'list': [10, 20, 30, 40, 50],
         'id_vopr': [1, 2, 3, 4, 5]
-    }
+    }}
     return render_template('secur.html', **params)
 
     
-@app.route('/success')
-def success():
-    params = {'form': {
-        'vopr': obr_vop(num_vopr)
-    }}
-    return render_template('seccess.html', **params)
+@app.route('/films')
+def films():
+    params = {}
+    return render_template('films.html', **params)
+
+
+@app.route('/books')
+def books():
+    params = {}
+    return render_template('books.html', **params)
+
+
+@app.route('/animals')
+def animals():
+    params = {}
+    return render_template('animals.html', **params)
+
+
+@app.route('/units')
+def units():
+    params = {}
+    return render_template('units.html', **params)
+
+
+@app.route('/hodgepodge')
+def hodgepodge():
+    params = {}
+    return render_template('hodgepodge.html', **params)
 
 
 def obr_vop(num_vopr):
@@ -37,6 +56,14 @@ def obr_vop(num_vopr):
     session.commit()
     return result[a][0]
 
+
+def name_vopr():
+    result = session.query(First_page).all()
+    return result
+    
+#params = {'form': {
+#        'vopr': obr_vop(num_vopr)
+#    }}
 
 if __name__ == '__main__':
     db_session.global_init("db/game.sqlite")
