@@ -4,10 +4,10 @@
 {% if form['kol_ball'] <= 75%}
     <h4>{{ form['title'][0] }}</h4>
 {% endif %}
-{% if 175 >= form['kol_ball'] > 75%}
+{% if 150 >= form['kol_ball'] > 75%}
     <h4>{{ form['title'][1] }}</h4>
 {% endif %}
-{% if form['kol_ball'] > 175%}
+{% if form['kol_ball'] > 150%}
     <h4>{{ form['title'][2] }}</h4>
 {% endif %}
 <h5>Вы набрали {{ form['kol_ball'] }} баллов</h5>
