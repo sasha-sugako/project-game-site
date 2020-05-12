@@ -28,7 +28,8 @@ def films():
     form = AnswerForm()
     if form.validate_on_submit():
         session = db_session.create_session()
-        if session.query(Second_page).filter(Second_page.otve == form.answer.data).first():
+        right_answer = session.query(Second_page).filter(Second_page.title == title).first()
+        if right_answer.otve in form.answer.data.lower():
             k += 10
         session.commit()
         return redirect('/game')
@@ -39,68 +40,66 @@ def films():
 def books():
     global k
     title = obr_vop(2)
-    params = {'form': {
-        'img_vopr': img_vopr(title)
-    }}
+    img_this = img_vopr(title)
     form = AnswerForm()
     if form.validate_on_submit():
         session = db_session.create_session()
-        if session.query(Second_page).filter(Second_page.otve == form.answer.data).first():
+        right_answer = session.query(Second_page).filter(Second_page.title == title).first()
+        if right_answer.otve in form.answer.data.lower():
             k += 10
         session.commit()
         return redirect('/game')
-    return render_template('books.html', form=form)
+    return render_template('books.html', title=title, img_vopr=url_for('static', filename=img_this), form=form)
 
 
 @app.route('/animals', methods=['GET', 'POST'])
 def animals():
     global k
     title = obr_vop(3)
-    params = {'form': {
-        'img_vopr': img_vopr(title)
-    }}
+    img_this = img_vopr(title)
     form = AnswerForm()
     if form.validate_on_submit():
         session = db_session.create_session()
-        if session.query(Second_page).filter(Second_page.otve == form.answer.data).first():
+        right_answer = session.query(Second_page).filter(Second_page.title == title).first()
+        if right_answer.otve in form.answer.data.lower():
             k += 10
         session.commit()
         return redirect('/game')
-    return render_template('animals.html', form=form)
+    return render_template('animals.html', title=title, img_vopr=url_for('static', filename=img_this), form=form)
 
 
 @app.route('/units', methods=['GET', 'POST'])
 def units():
     global k
     title = obr_vop(4)
-    params = {'form': {
-        'img_vopr': img_vopr(title)
-    }}
+    img_this = img_vopr(title)
     form = AnswerForm()
     if form.validate_on_submit():
         session = db_session.create_session()
-        if session.query(Second_page).filter(Second_page.otve == form.answer.data).first():
+        right_answer = session.query(Second_page).filter(Second_page.title == title).first()
+        if right_answer.otve in form.answer.data.lower():
             k += 10
         session.commit()
         return redirect('/game')
-    return render_template('units.html', form=form)
+    return render_template('units.html', title=title, img_vopr=url_for('static', filename=img_this), form=form)
 
 
 @app.route('/hodgepodge', methods=['GET', 'POST'])
 def hodgepodge():
     global k
     title = obr_vop(5)
-    params = {'form': {
-        'img_vopr': img_vopr(title)
-    }}
+    img_this = img_vopr(title)
     form = AnswerForm()
     if form.validate_on_submit():
         session = db_session.create_session()
-        if session.query(Second_page).filter(Second_page.otve == form.answer.data).first():
+        right_answer = session.query(Second_page).filter(Second_page.title == title).first()
+        print(title)
+        print(right_answer.otve)
+        if right_answer.otve in form.answer.data.lower():
             k += 10
         session.commit()
         return redirect('/game')
-    return render_template('hodgepodge.html', form=form)
+    return render_template('hodgepodge.html', title=title, img_vopr=url_for('static', filename=img_this), form=form)
 
 
 @app.route('/result_of_game')
@@ -123,7 +122,7 @@ def obr_vop(num_vopr):
     for i in session.query(Second_page).filter(Second_page.kol_isp == 0, Second_page.vopr_id == num_vopr):
         result.append(i)
     a = random.randint(0, 4)
-    if result == []:
+    if len(result) == 0:
         return 'К сожалению вопросы закончились'
     else:
         vopr_ud = session.query(Second_page).filter(Second_page.id == result[a].id)
@@ -142,7 +141,7 @@ def name_vopr():
 
 def img_vopr(title):
     session = db_session.create_session()
-    result = session.query(Second_page).filter(Second_page.title == title)
+    result = session.query(Second_page).filter(Second_page.title == title).first()
     return result.img
 
 

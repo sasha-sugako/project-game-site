@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Вопрос</h1>
+<h3>{{ title }}</h3>
+<img src="{ img_vopr }">
 <form action="" method="post">
     {{ form.hidden_tag() }}
     {{ form.csrf_token }}
