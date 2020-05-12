@@ -30,7 +30,6 @@ def films():
     global k
     global sp_f
     title = obr_vop(1)
-    print(title)
     if title == 'К сожалению вопросы закончились':
         params = {'form': {
             'title': title
@@ -38,13 +37,16 @@ def films():
         return render_template('bad.html', **params)
     else:
         right = right_answer(title)
-        print(right)
         sp_f.append([title, right])
         img_this = img_vopr(title)
         form = AnswerForm()
         if form.validate_on_submit():
             if sp_f[-2][1] in form.answer.data.lower():
                 k += 10
+                session = db_session.create_session()
+                result = session.query(Second_page).filter(Second_page.title == title).first()
+                result.kol_isp = 0
+                session.commit()
             return redirect('/game')
         return render_template('films.html', title=title, img_vopr=url_for('static', filename=img_this), form=form)
 
@@ -67,6 +69,10 @@ def books():
         if form.validate_on_submit():
             if sp_b[-2][1] in form.answer.data.lower():
                 k += 10
+                session = db_session.create_session()
+                result = session.query(Second_page).filter(Second_page.title == title).first()
+                result.kol_isp = 0
+                session.commit()
             return redirect('/game')
         return render_template('books.html', title=title, img_vopr=url_for('static', filename=img_this), form=form)
 
@@ -89,6 +95,10 @@ def animals():
         if form.validate_on_submit():
             if sp_a[-2][1] in form.answer.data.lower():
                 k += 10
+                session = db_session.create_session()
+                result = session.query(Second_page).filter(Second_page.title == title).first()
+                result.kol_isp = 0
+                session.commit()
             return redirect('/game')
         return render_template('animals.html', title=title, img_vopr=url_for('static', filename=img_this), form=form)
 
@@ -111,6 +121,10 @@ def units():
         if form.validate_on_submit():
             if sp_u[-2][1] in form.answer.data.lower():
                 k += 10
+                session = db_session.create_session()
+                result = session.query(Second_page).filter(Second_page.title == title).first()
+                result.kol_isp = 0
+                session.commit()
             return redirect('/game')
         return render_template('units.html', title=title, img_vopr=url_for('static', filename=img_this), form=form)
 
@@ -133,6 +147,10 @@ def hodgepodge():
         if form.validate_on_submit():
             if sp_h[-2][1] in form.answer.data.lower():
                 k += 10
+                session = db_session.create_session()
+                result = session.query(Second_page).filter(Second_page.title == title).first()
+                result.kol_isp = 0
+                session.commit()
             return redirect('/game')
         return render_template('hodgepodge.html', title=title, img_vopr=url_for('static', filename=img_this), form=form)
 
