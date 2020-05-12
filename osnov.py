@@ -52,6 +52,7 @@ def films():
 @app.route('/books', methods=['GET', 'POST'])
 def books():
     global k
+    global sp_b
     title = obr_vop(2)
     if title == 'К сожалению вопросы закончились':
         params = {'form': {
@@ -59,14 +60,13 @@ def books():
         }}
         return render_template('bad.html', **params)
     else:
+        right = right_answer(title)
+        sp_b.append([title, right])
         img_this = img_vopr(title)
         form = AnswerForm()
         if form.validate_on_submit():
-            session = db_session.create_session()
-            right_answer = session.query(Second_page).filter(Second_page.title == title).first()
-            if right_answer.otve in form.answer.data.lower():
+            if sp_b[-2][1] in form.answer.data.lower():
                 k += 10
-            session.commit()
             return redirect('/game')
         return render_template('books.html', title=title, img_vopr=url_for('static', filename=img_this), form=form)
 
@@ -74,6 +74,7 @@ def books():
 @app.route('/animals', methods=['GET', 'POST'])
 def animals():
     global k
+    global sp_a
     title = obr_vop(3)
     if title == 'К сожалению вопросы закончились':
         params = {'form': {
@@ -81,14 +82,13 @@ def animals():
         }}
         return render_template('bad.html', **params)
     else:
+        right = right_answer(title)
+        sp_a.append([title, right])
         img_this = img_vopr(title)
         form = AnswerForm()
         if form.validate_on_submit():
-            session = db_session.create_session()
-            right_answer = session.query(Second_page).filter(Second_page.title == title).first()
-            if right_answer.otve in form.answer.data.lower():
+            if sp_a[-2][1] in form.answer.data.lower():
                 k += 10
-            session.commit()
             return redirect('/game')
         return render_template('animals.html', title=title, img_vopr=url_for('static', filename=img_this), form=form)
 
@@ -96,6 +96,7 @@ def animals():
 @app.route('/units', methods=['GET', 'POST'])
 def units():
     global k
+    global sp_u
     title = obr_vop(4)
     if title == 'К сожалению вопросы закончились':
         params = {'form': {
@@ -103,14 +104,13 @@ def units():
         }}
         return render_template('bad.html', **params)
     else:
+        right = right_answer(title)
+        sp_u.append([title, right])
         img_this = img_vopr(title)
         form = AnswerForm()
         if form.validate_on_submit():
-            session = db_session.create_session()
-            right_answer = session.query(Second_page).filter(Second_page.title == title).first()
-            if right_answer.otve in form.answer.data.lower():
+            if sp_u[-2][1] in form.answer.data.lower():
                 k += 10
-            session.commit()
             return redirect('/game')
         return render_template('units.html', title=title, img_vopr=url_for('static', filename=img_this), form=form)
 
@@ -118,6 +118,7 @@ def units():
 @app.route('/hodgepodge', methods=['GET', 'POST'])
 def hodgepodge():
     global k
+    global sp_h
     title = obr_vop(5)
     if title == 'К сожалению вопросы закончились':
         params = {'form':{
@@ -125,16 +126,13 @@ def hodgepodge():
         }}
         return render_template('bad.html', **params)
     else:
+        right = right_answer(title)
+        sp_h.append([title, right])
         img_this = img_vopr(title)
         form = AnswerForm()
         if form.validate_on_submit():
-            session = db_session.create_session()
-            right_answer = session.query(Second_page).filter(Second_page.title == title).first()
-            print(title)
-            print(right_answer.otve)
-            if right_answer.otve in form.answer.data.lower():
+            if sp_h[-2][1] in form.answer.data.lower():
                 k += 10
-            session.commit()
             return redirect('/game')
         return render_template('hodgepodge.html', title=title, img_vopr=url_for('static', filename=img_this), form=form)
 
