@@ -4,6 +4,8 @@ import random
 from flask_wtf import FlaskForm
 from wtforms import TextAreaField, SubmitField
 from data import db_session
+from data.second_page import Second_page
+from data.first_page import First_page
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 k = 0
@@ -21,10 +23,10 @@ def login():
 @app.route('/films', methods=['GET', 'POST'])
 def films():
     global k
-    title = obr_vop(1)
-    params = {'form': {
-        'img_vopr': img_vopr(title)
-    }}
+    #title = obr_vop(1)
+    #params = {'form': {
+     #   'img_vopr': img_vopr(title)
+    #}}
     form = AnswerForm()
     if form.validate_on_submit():
         session = db_session.create_session()
@@ -148,6 +150,7 @@ class AnswerForm(FlaskForm):
     submit = SubmitField('Отправить')
 
 
+print(obr_vop(1))
 if __name__ == '__main__':
     db_session.global_init("db/game.sqlite")
     app.run(port=8080, host='127.0.0.1')
