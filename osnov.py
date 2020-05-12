@@ -83,6 +83,18 @@ def hodgepodge():
     return render_template('hodgepodge.html', form=form)
 
 
+@app.route('/result_of_game')
+def result_of_game():
+    global k
+    params = {
+        'form':{
+            'kol_ball': k,
+            'title': 'Просто супер молодцы',
+        }
+    }
+    return render_template('result_of_game.html', **params)
+
+
 def obr_vop(num_vopr):
     result = []
     session = db_session.create_session()
