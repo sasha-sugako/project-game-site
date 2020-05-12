@@ -21,6 +21,10 @@ def login():
 @app.route('/films', methods=['GET', 'POST'])
 def films():
     global k
+    title = obr_vop(1)
+    params = {'form': {
+        'img_vopr': img_vopr(title)
+    }}
     form = AnswerForm()
     if form.validate_on_submit():
         session = db_session.create_session()
@@ -34,6 +38,10 @@ def films():
 @app.route('/books', methods=['GET', 'POST'])
 def books():
     global k
+    title = obr_vop(2)
+    params = {'form': {
+        'img_vopr': img_vopr(title)
+    }}
     form = AnswerForm()
     if form.validate_on_submit():
         session = db_session.create_session()
@@ -47,6 +55,10 @@ def books():
 @app.route('/animals', methods=['GET', 'POST'])
 def animals():
     global k
+    title = obr_vop(3)
+    params = {'form': {
+        'img_vopr': img_vopr(title)
+    }}
     form = AnswerForm()
     if form.validate_on_submit():
         session = db_session.create_session()
@@ -60,6 +72,10 @@ def animals():
 @app.route('/units', methods=['GET', 'POST'])
 def units():
     global k
+    title = obr_vop(4)
+    params = {'form': {
+        'img_vopr': img_vopr(title)
+    }}
     form = AnswerForm()
     if form.validate_on_submit():
         session = db_session.create_session()
@@ -73,6 +89,10 @@ def units():
 @app.route('/hodgepodge', methods=['GET', 'POST'])
 def hodgepodge():
     global k
+    title = obr_vop(5)
+    params = {'form': {
+        'img_vopr': img_vopr(title)
+    }}
     form = AnswerForm()
     if form.validate_on_submit():
         session = db_session.create_session()
@@ -117,14 +137,17 @@ def name_vopr():
     return result
 
 
+def img_vopr(title):
+    session = db_session.create_session()
+    result = session.query(Second_page).filter(Second_page.title == title)
+    return result.img_vopr
+
+
 class AnswerForm(FlaskForm):
     answer = TextAreaField("Ответ: ")
     submit = SubmitField('Отправить')
 
 
-#params = {'form': {
-#        'vopr': obr_vop(num_vopr)
-#    }}
 if __name__ == '__main__':
     db_session.global_init("db/game.sqlite")
     app.run(port=8080, host='127.0.0.1')
