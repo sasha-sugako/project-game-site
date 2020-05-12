@@ -89,7 +89,9 @@ def result_of_game():
     params = {
         'form':{
             'kol_ball': k,
-            'title': 'Просто супер молодцы',
+            'title': ['Думаю вам надо ещё потренироваться',
+                      'Неплохой результат',
+                      'Да вы просто мастер этой игры'],
         }
     }
     return render_template('result_of_game.html', **params)
