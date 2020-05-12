@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import render_template, redirect
+from flask import render_template, redirect, url_for
 import random
 from flask_wtf import FlaskForm
 from wtforms import TextAreaField, SubmitField
@@ -23,10 +23,8 @@ def login():
 @app.route('/films', methods=['GET', 'POST'])
 def films():
     global k
-    #title = obr_vop(1)
-    #params = {'form': {
-     #   'img_vopr': img_vopr(title)
-    #}}
+    title = obr_vop(1)
+    img_this = img_vopr(title)
     form = AnswerForm()
     if form.validate_on_submit():
         session = db_session.create_session()
@@ -34,7 +32,7 @@ def films():
             k += 10
         session.commit()
         return redirect('/game')
-    return render_template('films.html', form=form)
+    return render_template('films.html', title=title, img_vopr=url_for('static', filename=img_this), form=form)
 
 
 @app.route('/books', methods=['GET', 'POST'])
@@ -124,11 +122,14 @@ def obr_vop(num_vopr):
     session = db_session.create_session()
     for i in session.query(Second_page).filter(Second_page.kol_isp == 0, Second_page.vopr_id == num_vopr):
         result.append(i)
-    a = random.randint(0, len(result))
-    vopr_ud = session.query(Second_page).filter(Second_page.title == result[a][0])
-    vopr_ud.kol_isp = 1
-    session.commit()
-    return result[a][0]
+    a = random.randint(0, 4)
+    if result == []:
+        return 'К сожалению вопросы закончились'
+    else:
+        vopr_ud = session.query(Second_page).filter(Second_page.id == result[a].id)
+        vopr_ud.kol_isp = 1
+        session.commit()
+    return result[a].title
 
 
 def name_vopr():
@@ -142,7 +143,7 @@ def name_vopr():
 def img_vopr(title):
     session = db_session.create_session()
     result = session.query(Second_page).filter(Second_page.title == title)
-    return result.img_vopr
+    return result.img
 
 
 class AnswerForm(FlaskForm):
@@ -150,7 +151,7 @@ class AnswerForm(FlaskForm):
     submit = SubmitField('Отправить')
 
 
-print(obr_vop(1))
 if __name__ == '__main__':
     db_session.global_init("db/game.sqlite")
+    print(img_vopr('Какого ученого звания неожиданно для себя удостоился скромный директор детского сада, он же «джентльмен удачи»?'))
     app.run(port=8080, host='127.0.0.1')
